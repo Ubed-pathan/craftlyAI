@@ -23,7 +23,6 @@ import useFetch from "@/hooks/use-fetch";
 import { useUser } from "@clerk/nextjs";
 import { entriesToMarkdown } from "@/app/lib/helper";
 import { resumeSchema } from "@/app/lib/schema";
-import html2pdf from "html2pdf.js/dist/html2pdf.min.js";
 
 export default function ResumeBuilder({ initialContent }) {
   const [activeTab, setActiveTab] = useState("edit");
@@ -114,19 +113,106 @@ export default function ResumeBuilder({ initialContent }) {
 
   const generatePDF = async () => {
     setIsGenerating(true);
+
+    const contentForPdf = getCombinedContent() || previewContent || initialContent;
+    if (contentForPdf && contentForPdf !== previewContent) {
+      setPreviewContent(contentForPdf);
+      await new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve))
+      );
+    }
+
     try {
+      const { default: html2pdf } = await import(
+        "html2pdf.js/dist/html2pdf.min.js"
+      );
       const element = document.getElementById("resume-pdf");
+
+      if (!element) {
+        throw new Error("Resume preview not ready. Open the Markdown tab and try again.");
+      }
+
       const opt = {
         margin: [15, 15],
         filename: "resume.pdf",
         image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2 },
+        html2canvas: {
+          scale: 2,
+          backgroundColor: "#ffffff",
+          useCORS: true,
+          onclone: (doc) => {
+            const target = doc.getElementById("resume-pdf");
+            if (target) {
+              const parent = target.parentElement;
+              if (parent?.classList.contains("hidden")) {
+                parent.classList.remove("hidden");
+              }
+              target.style.display = "block";
+              target.style.visibility = "visible";
+              target.style.background = "#ffffff";
+            }
+
+            try {
+              doc.head
+                .querySelectorAll('link[rel="stylesheet"], style')
+                .forEach((node) => node.parentNode?.removeChild(node));
+            } catch {
+              // ignore clone cleanup errors
+            }
+
+            const style = doc.createElement("style");
+            style.textContent = `
+              #resume-pdf, #resume-pdf * {
+                color: #000 !important;
+                background: #fff !important;
+                background-color: #fff !important;
+                border-color: #000 !important;
+                outline-color: #000 !important;
+                text-decoration-color: #000 !important;
+                box-shadow: none !important;
+                text-shadow: none !important;
+                background-image: none !important;
+                filter: none !important;
+                -webkit-filter: none !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+              }
+              #resume-pdf a, #resume-pdf a * {
+                text-decoration: none !important;
+                border: none !important;
+                border-bottom: none !important;
+              }
+              #resume-pdf h1, #resume-pdf h2, #resume-pdf h3 {
+                border-bottom-width: 0.25px !important;
+                border-bottom-style: solid !important;
+                border-bottom-color: rgba(0,0,0,0.3) !important;
+                padding-bottom: 10px;
+                margin-bottom: 12px;
+              }
+              #resume-pdf hr {
+                height: 0;
+                border: none;
+                border-top-width: 0.25px !important;
+                border-top-style: solid !important;
+                border-top-color: rgba(0,0,0,0.3) !important;
+                margin: 12px 0;
+              }
+              #resume-pdf svg {
+                fill: #000 !important;
+                stroke: #000 !important;
+              }
+            `;
+            doc.head.appendChild(style);
+          },
+        },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       };
 
       await html2pdf().set(opt).from(element).save();
+      toast.success("Resume PDF downloaded");
     } catch (error) {
       console.error("PDF generation error:", error);
+      toast.error(error?.message || "Failed to generate PDF");
     } finally {
       setIsGenerating(false);
     }
@@ -403,19 +489,20 @@ export default function ResumeBuilder({ initialContent }) {
               preview={resumeMode}
             />
           </div>
-          <div className="hidden">
-            <div id="resume-pdf">
-              <MDEditor.Markdown
-                source={previewContent}
-                style={{
-                  background: "white",
-                  color: "black",
-                }}
-              />
-            </div>
-          </div>
         </TabsContent>
       </Tabs>
+
+      <div className="hidden" aria-hidden="true">
+        <div id="resume-pdf">
+          <MDEditor.Markdown
+            source={previewContent ?? ""}
+            style={{
+              background: "white",
+              color: "black",
+            }}
+          />
+        </div>
+      </div>
     </div>
   );
 }
