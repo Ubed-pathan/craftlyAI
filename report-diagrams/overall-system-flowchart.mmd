@@ -1,0 +1,18 @@
+flowchart TB
+    Start([Start]) --> Landing[Landing Page]
+    Landing --> Auth{User signed in?}
+    Auth -->|No| SignIn[Sign In / Sign Up via Clerk]
+    SignIn --> Sync[Sync user to PostgreSQL]
+    Auth -->|Yes| Sync
+    Sync --> Onboard{Profile complete?}
+    Onboard -->|No| OnbForm[Onboarding Form]
+    OnbForm --> SaveProf[Save profile + industry insights]
+    SaveProf --> Dashboard[Industry Dashboard]
+    Onboard -->|Yes| Dashboard
+    Dashboard --> Resume[Resume Builder]
+    Dashboard --> Cover[Cover Letter Generator]
+    Dashboard --> Interview[Interview Preparation]
+    Resume --> SaveRes[Save / PDF / AI improve]
+    Cover --> GenCL[Generate & store letter]
+    Interview --> Quiz[Mock MCQ Quiz]
+    Quiz --> StoreAss[Store assessment + tips]

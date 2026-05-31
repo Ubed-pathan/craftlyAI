@@ -1,0 +1,51 @@
+flowchart TB
+    subgraph Phase1 [Test Planning]
+        P1[Define test objectives]
+        P2[Identify modules to test]
+        P1 --> P2
+    end
+
+    subgraph Phase2 [Test Environment]
+        E1[Browser: Chrome or Edge]
+        E2[Next.js dev or production build]
+        E3[PostgreSQL + Clerk + Gemini API]
+        E1 --> E2 --> E3
+    end
+
+    P2 --> Phase2
+
+    subgraph Phase3 [Functional Testing]
+        T1[Auth and route protection]
+        T2[Onboarding and profile]
+        T3[Industry dashboard]
+        T4[Resume builder]
+        T5[Cover letter generator]
+        T6[Mock interview quiz]
+        T7[Background job - Inngest]
+    end
+
+    Phase2 --> T1
+    T1 --> T2 --> T3
+    T3 --> T4 --> T5 --> T6 --> T7
+
+    subgraph Phase4 [Validation Checks]
+        V1[Form validation - Zod]
+        V2[Data persistence in DB]
+        V3[AI response and save]
+        V4[PDF export]
+        V5[Security - no API key in browser]
+    end
+
+    T7 --> V1 --> V2 --> V3 --> V4 --> V5
+
+    subgraph Phase5 [Result]
+        R1{All tests passed?}
+        R2[Document results in report]
+        R3[Fix defects and retest]
+    end
+
+    V5 --> R1
+    R1 -->|Yes| R2
+    R1 -->|No| R3
+    R3 --> Phase3
+    R2 --> End([Testing Complete])

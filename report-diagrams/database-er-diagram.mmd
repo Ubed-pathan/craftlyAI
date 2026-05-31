@@ -1,0 +1,66 @@
+erDiagram
+    User ||--o| Resume : has
+    User ||--o{ CoverLetter : has
+    User ||--o{ Assessment : has
+    IndustryInsight ||--o{ User : linked
+
+    User {
+        string id PK
+        string clerkUserId
+        string email
+        string name
+        string imageUrl
+        string industry FK
+        string bio
+        int experience
+        string skills
+        date createdAt
+        date updatedAt
+    }
+
+    Resume {
+        string id PK
+        string userId FK
+        string content
+        float atsScore
+        string feedback
+        date createdAt
+        date updatedAt
+    }
+
+    CoverLetter {
+        string id PK
+        string userId FK
+        string content
+        string jobDescription
+        string companyName
+        string jobTitle
+        string status
+        date createdAt
+        date updatedAt
+    }
+
+    Assessment {
+        string id PK
+        string userId FK
+        float quizScore
+        string questions
+        string category
+        string improvementTip
+        date createdAt
+        date updatedAt
+    }
+
+    IndustryInsight {
+        string id PK
+        string industry
+        string salaryRanges
+        float growthRate
+        string demandLevel
+        string topSkills
+        string marketOutlook
+        string keyTrends
+        string recommendedSkills
+        date lastUpdated
+        date nextUpdate
+    }

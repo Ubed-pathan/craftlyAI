@@ -132,6 +132,8 @@ export default function ResumeBuilder({ initialContent }) {
     }
   };
 
+  
+
   const onSubmit = async (data) => {
     try {
       const formattedContent = previewContent

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Figure 3.y — Module-wise Testing Table (Craftly-AI)</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 2cm;
+    }
+    body {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 12pt;
+      line-height: 1.5;
+      margin: 2rem;
+      color: #000;
+      background: #fff;
+    }
+    h1 {
+      font-size: 14pt;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .caption {
+      font-size: 11pt;
+      margin-bottom: 1.25rem;
+      max-width: 100%;
+    }
+    .hint {
+      font-size: 10pt;
+      color: #333;
+      margin-bottom: 1.5rem;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #999;
+      background: #f9f9f9;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 auto 1.5rem;
+    }
+    th, td {
+      border: 1px solid #000;
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      font-weight: bold;
+      background: #f0f0f0;
+    }
+    td:first-child {
+      font-weight: bold;
+      width: 22%;
+    }
+    td:nth-child(2) {
+      width: 58%;
+    }
+    td:last-child {
+      width: 12%;
+      text-align: center;
+    }
+    @media print {
+      .hint { display: none; }
+      body { margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Table 3.1 — Module-wise Testing Summary (Craftly-AI)</h1>
+  <p class="caption">
+    Summary of manual functional testing performed on each module of the Craftly-AI application.
+  </p>
+  <p class="hint">
+    <strong>Download:</strong> Press <strong>Ctrl+P</strong> → <strong>Save as PDF</strong>, or select the table → copy → paste into Word.
+    You can also open <strong>testing-module-table.csv</strong> in Excel/Word.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Craftly-AI module</th>
+        <th>Test focus</th>
+        <th>Outcome</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Authentication</td>
+        <td>Sign-in, sign-out, protected routes, user sync to PostgreSQL</td>
+        <td>Pass</td>
+      </tr>
+      <tr>
+        <td>Onboarding</td>
+        <td>Industry and specialization selection, form validation, save profile, create industry insights</td>
+        <td>Pass</td>
+      </tr>
+      <tr>
+        <td>Industry Dashboard</td>
+        <td>Display insights and salary chart, load or generate industry data, persist data on page refresh</td>
+        <td>Pass</td>
+      </tr>
+      <tr>
+        <td>Resume Builder</td>
+        <td>Edit resume sections, markdown preview, save and reload, AI description improve, PDF export</td>
+        <td>Pass</td>
+      </tr>
+      <tr>
+        <td>Cover Letter Generator</td>
+        <td>Generate cover letter from job details, view saved letter, list letters, delete letter</td>
+        <td>Pass</td>
+      </tr>
+      <tr>
+        <td>Interview Preparation</td>
+        <td>Generate technical MCQ quiz, score attempt, save assessment, view stats and chart, improvement tips</td>
+        <td>Pass</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="caption" style="margin-top: 1rem;">
+  <strong>Note:</strong> Testing was carried out using manual functional testing in a browser with PostgreSQL, Clerk, and Gemini API configured in the development environment.
+  </p>
+</body>
+</html>

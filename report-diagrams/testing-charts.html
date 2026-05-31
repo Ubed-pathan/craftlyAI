@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Craftly-AI — Testing Charts</title>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "default",
+      securityLevel: "loose",
+      flowchart: { useMaxWidth: true, htmlLabels: true, curve: "basis" },
+    });
+  </script>
+  <style>
+    body {
+      font-family: "Times New Roman", Times, serif;
+      margin: 2rem;
+      background: #fff;
+      color: #111;
+    }
+    h1 { font-size: 1.35rem; font-weight: bold; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.1rem; font-weight: bold; margin: 2rem 0 0.5rem; }
+    p, li { font-size: 0.9rem; line-height: 1.5; max-width: 52rem; }
+    ul { margin-bottom: 1rem; }
+    .diagram-wrap {
+      overflow-x: auto;
+      padding: 1rem 0 2rem;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 1rem;
+    }
+    @media print {
+      body { margin: 1cm; }
+      h2 { page-break-before: auto; }
+      .diagram-wrap { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Craftly-AI — Testing Charts (for Project Report)</h1>
+  <p><strong>How to download:</strong></p>
+  <ul>
+    <li>Right-click each diagram → <strong>Save image as…</strong> (PNG)</li>
+    <li>Or <strong>Ctrl+P</strong> → <strong>Save as PDF</strong> (both figures in one file)</li>
+    <li>Or open <code>testing-flowchart.mmd</code> / <code>testing-module-chart.mmd</code> at
+      <a href="https://mermaid.live" target="_blank" rel="noopener">mermaid.live</a> → Export PNG / SVG</li>
+  </ul>
+
+  <h2>Figure 3.x — Software Testing Process Flowchart</h2>
+  <p>Use this in Section 3.5 (Testing) to show how testing was planned and executed.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+flowchart TB
+    subgraph Phase1 [Test Planning]
+        P1[Define test objectives]
+        P2[Identify modules to test]
+        P1 --> P2
+    end
+
+    subgraph Phase2 [Test Environment]
+        E1[Browser: Chrome or Edge]
+        E2[Next.js dev or production build]
+        E3[PostgreSQL + Clerk + Gemini API]
+        E1 --> E2 --> E3
+    end
+
+    P2 --> Phase2
+
+    subgraph Phase3 [Functional Testing]
+        T1[Auth and route protection]
+        T2[Onboarding and profile]
+        T3[Industry dashboard]
+        T4[Resume builder]
+        T5[Cover letter generator]
+        T6[Mock interview quiz]
+        T7[Background job - Inngest]
+    end
+
+    Phase2 --> T1
+    T1 --> T2 --> T3
+    T3 --> T4 --> T5 --> T6 --> T7
+
+    subgraph Phase4 [Validation Checks]
+        V1[Form validation - Zod]
+        V2[Data persistence in DB]
+        V3[AI response and save]
+        V4[PDF export]
+        V5[Security - no API key in browser]
+    end
+
+    T7 --> V1 --> V2 --> V3 --> V4 --> V5
+
+    subgraph Phase5 [Result]
+        R1{All tests passed?}
+        R2[Document results in report]
+        R3[Fix defects and retest]
+    end
+
+    V5 --> R1
+    R1 -->|Yes| R2
+    R1 -->|No| R3
+    R3 --> Phase3
+    R2 --> End([Testing Complete])
+    </pre>
+  </div>
+
+  <h2>Figure 3.y — Module-wise Testing Overview</h2>
+  <p>Each row: <strong>Module → Test Focus → Expected Outcome (Pass)</strong>. See also <code>testing-module-chart.html</code>.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+flowchart TB
+    M1[Module: Authentication] --> T1["Test Focus: Sign-in, Sign-out, Protected routes, User sync to PostgreSQL"] --> P1[Expected Outcome: Pass]
+
+    M2[Module: Onboarding] --> T2["Test Focus: Industry and specialization, Form validation, Save profile, Create industry insights"] --> P2[Expected Outcome: Pass]
+
+    M3[Module: Industry Dashboard] --> T3["Test Focus: Display insights and salary chart, Load or generate data, Persist data on refresh"] --> P3[Expected Outcome: Pass]
+
+    M4[Module: Resume Builder] --> T4["Test Focus: Edit sections, Markdown preview, Save and reload, AI improve, PDF export"] --> P4[Expected Outcome: Pass]
+
+    M5[Module: Cover Letter Generator] --> T5["Test Focus: Generate from job details, View letter, List letters, Delete letter"] --> P5[Expected Outcome: Pass]
+
+    M6[Module: Interview Preparation] --> T6["Test Focus: Generate MCQ quiz, Score attempt, Save assessment, Stats and chart, Improvement tips"] --> P6[Expected Outcome: Pass]
+    </pre>
+  </div>
+
+  <p>
+    <strong>Report text (optional):</strong> Testing was performed using manual functional testing.
+    Figure 3.x shows the overall testing process from planning to completion; Figure 3.y shows
+    module-wise test coverage for Craftly-AI.
+  </p>
+</body>
+</html>

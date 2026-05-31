@@ -1,0 +1,12 @@
+flowchart TB
+    M1[Module: Authentication] --> T1["Test Focus: Sign-in, Sign-out, Protected routes, User sync to PostgreSQL"] --> P1[Expected Outcome: Pass]
+
+    M2[Module: Onboarding] --> T2["Test Focus: Industry and specialization, Form validation, Save profile, Create industry insights"] --> P2[Expected Outcome: Pass]
+
+    M3[Module: Industry Dashboard] --> T3["Test Focus: Display insights and salary chart, Load or generate data, Persist data on refresh"] --> P3[Expected Outcome: Pass]
+
+    M4[Module: Resume Builder] --> T4["Test Focus: Edit sections, Markdown preview, Save and reload, AI improve, PDF export"] --> P4[Expected Outcome: Pass]
+
+    M5[Module: Cover Letter Generator] --> T5["Test Focus: Generate from job details, View letter, List letters, Delete letter"] --> P5[Expected Outcome: Pass]
+
+    M6[Module: Interview Preparation] --> T6["Test Focus: Generate MCQ quiz, Score attempt, Save assessment, Stats and chart, Improvement tips"] --> P6[Expected Outcome: Pass]

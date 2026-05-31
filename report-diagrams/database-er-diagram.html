@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Craftly-AI — Database ER Diagram</title>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "default",
+      securityLevel: "loose",
+    });
+  </script>
+  <style>
+    body {
+      font-family: "Times New Roman", Times, serif;
+      margin: 2rem;
+      background: #fff;
+    }
+    h1 {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    p, li {
+      font-size: 0.9rem;
+      color: #333;
+      max-width: 52rem;
+      line-height: 1.5;
+    }
+    ul {
+      margin-bottom: 1.5rem;
+    }
+    .diagram-wrap {
+      overflow-x: auto;
+      padding: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Figure — Entity-Relationship Diagram (Craftly-AI Database)</h1>
+  <p><strong>How to download:</strong></p>
+  <ul>
+    <li>Right-click the diagram → <strong>Save image as…</strong></li>
+    <li>Or <strong>Ctrl+P</strong> → <strong>Save as PDF</strong></li>
+    <li>Or paste <code>database-er-diagram.mmd</code> into
+      <a href="https://mermaid.live" target="_blank" rel="noopener">mermaid.live</a>
+      → Export PNG / SVG</li>
+  </ul>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+erDiagram
+    User ||--o| Resume : has
+    User ||--o{ CoverLetter : has
+    User ||--o{ Assessment : has
+    IndustryInsight ||--o{ User : linked
+
+    User {
+        string id PK
+        string clerkUserId
+        string email
+        string name
+        string imageUrl
+        string industry FK
+        string bio
+        int experience
+        string skills
+        date createdAt
+        date updatedAt
+    }
+
+    Resume {
+        string id PK
+        string userId FK
+        string content
+        float atsScore
+        string feedback
+        date createdAt
+        date updatedAt
+    }
+
+    CoverLetter {
+        string id PK
+        string userId FK
+        string content
+        string jobDescription
+        string companyName
+        string jobTitle
+        string status
+        date createdAt
+        date updatedAt
+    }
+
+    Assessment {
+        string id PK
+        string userId FK
+        float quizScore
+        string questions
+        string category
+        string improvementTip
+        date createdAt
+        date updatedAt
+    }
+
+    IndustryInsight {
+        string id PK
+        string industry
+        string salaryRanges
+        float growthRate
+        string demandLevel
+        string topSkills
+        string marketOutlook
+        string keyTrends
+        string recommendedSkills
+        date lastUpdated
+        date nextUpdate
+    }
+    </pre>
+  </div>
+  <p>
+    <strong>Note:</strong> Array and JSON fields (skills, questions, salaryRanges, etc.) are shown as string in the diagram for compatibility; in PostgreSQL they are stored as array or JSON types per Prisma schema.
+  </p>
+</body>
+</html>

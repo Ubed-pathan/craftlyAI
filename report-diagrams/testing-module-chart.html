@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Figure 3.y — Module-wise Testing Overview</title>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "default",
+      securityLevel: "loose",
+      flowchart: { useMaxWidth: true, htmlLabels: true, curve: "basis" },
+    });
+  </script>
+  <style>
+    body {
+      font-family: "Times New Roman", Times, serif;
+      margin: 2rem;
+      background: #fff;
+    }
+    h1 { font-size: 1.25rem; font-weight: bold; }
+    p { font-size: 0.9rem; line-height: 1.5; max-width: 52rem; }
+    .diagram-wrap { overflow-x: auto; padding: 1.5rem 0; }
+    .legend {
+      font-size: 0.85rem;
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ccc;
+      max-width: 52rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Figure 3.y — Module-wise Testing Overview (Craftly-AI)</h1>
+  <p>
+    Each row links one module to its test focus and expected outcome.
+    <strong>Download:</strong> right-click diagram → Save image as…, or Ctrl+P → PDF.
+  </p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+flowchart TB
+    M1[Module: Authentication] --> T1["Test Focus: Sign-in, Sign-out, Protected routes, User sync to PostgreSQL"] --> P1[Expected Outcome: Pass]
+
+    M2[Module: Onboarding] --> T2["Test Focus: Industry and specialization, Form validation, Save profile, Create industry insights"] --> P2[Expected Outcome: Pass]
+
+    M3[Module: Industry Dashboard] --> T3["Test Focus: Display insights and salary chart, Load or generate data, Persist data on refresh"] --> P3[Expected Outcome: Pass]
+
+    M4[Module: Resume Builder] --> T4["Test Focus: Edit sections, Markdown preview, Save and reload, AI improve, PDF export"] --> P4[Expected Outcome: Pass]
+
+    M5[Module: Cover Letter Generator] --> T5["Test Focus: Generate from job details, View letter, List letters, Delete letter"] --> P5[Expected Outcome: Pass]
+
+    M6[Module: Interview Preparation] --> T6["Test Focus: Generate MCQ quiz, Score attempt, Save assessment, Stats and chart, Improvement tips"] --> P6[Expected Outcome: Pass]
+    </pre>
+  </div>
+  <div class="legend">
+    <strong>Column meaning (left → right):</strong><br />
+    <strong>Craftly-AI Module</strong> — feature under test &nbsp;|&nbsp;
+    <strong>Test Focus</strong> — what was verified &nbsp;|&nbsp;
+    <strong>Expected Outcome</strong> — Pass for all modules in manual testing
+  </div>
+</body>
+</html>

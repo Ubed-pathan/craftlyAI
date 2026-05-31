@@ -1,0 +1,7 @@
+Craftly-AI module,Test focus,Outcome
+Authentication,"Sign-in, sign-out, protected routes, user sync to PostgreSQL",Pass
+Onboarding,"Industry and specialization selection, form validation, save profile, create industry insights",Pass
+Industry Dashboard,"Display insights and salary chart, load or generate industry data, persist data on page refresh",Pass
+Resume Builder,"Edit resume sections, markdown preview, save and reload, AI description improve, PDF export",Pass
+Cover Letter Generator,"Generate cover letter from job details, view saved letter, list letters, delete letter",Pass
+Interview Preparation,"Generate technical MCQ quiz, score attempt, save assessment, view stats and chart, improvement tips",Pass
