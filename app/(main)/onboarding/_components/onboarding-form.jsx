@@ -73,7 +73,7 @@ const OnboardingForm = ({ industries }) => {
       router.push("/dashboard");
       router.refresh();
     }
-  }, [updateResult, updateLoading]);
+  }, [updateResult, updateLoading, router]);
 
   const watchIndustry = watch("industry");
 

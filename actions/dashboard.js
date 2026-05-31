@@ -3,6 +3,7 @@
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { ensureUser } from "@/lib/checkUser";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
@@ -40,23 +41,25 @@ export async function getIndustryInsights() {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
 
-  const user = await db.user.findUnique({
-    // clerkUserId: userId it mean when we get userId from clerk auth it gives us the userId but in out schema we assigned it as clerkUserId
+  const user = await ensureUser();
+  if (!user) throw new Error("Unauthorized");
+
+  const userWithInsights = await db.user.findUnique({
     where: { clerkUserId: userId },
     include: {
       industryInsight: true,
     },
   });
 
-  if (!user) throw new Error("User not found");
+  if (!userWithInsights) throw new Error("User not found");
 
   // If no insights exist, generate them
-  if (!user.industryInsight) {
-    const insights = await generateAIInsights(user.industry);
+  if (!userWithInsights.industryInsight) {
+    const insights = await generateAIInsights(userWithInsights.industry);
 
     const industryInsight = await db.industryInsight.create({
       data: {
-        industry: user.industry,
+        industry: userWithInsights.industry,
         ...insights,
         nextUpdate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       },
@@ -65,5 +68,5 @@ export async function getIndustryInsights() {
     return industryInsight;
   }
 
-  return user.industryInsight;
+  return userWithInsights.industryInsight;
 }
